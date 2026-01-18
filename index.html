@@ -1,23 +1,456 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+ <style>
+    /* Reset and Typography */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8; /* Increased line height for readability */
+      color: #333;
+      background: #fcfcfc; /* Softer background */
+    }
+    header, nav, section, footer {
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+      background: #fff;
+      margin-bottom: 20px;
+      border-radius: 12px; /* Smoother corners */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Stronger, softer shadow */
+    }
+    header {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Soft gradient background */
+      padding-top: 50px;
+      padding-bottom: 50px;
+      text-align: center;
+    }
+    header h1 {
+      margin-bottom: 10px;
+      color: #1a237e; /* Deep blue for title */
+      font-weight: 800;
+      font-size: 2.5rem;
+    }
+    header p {
+      color: #3f51b5;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    /* Navigation */
+    nav {
+      background: #4a90e2; /* Modern blue */
+      border-radius: 12px;
+      text-align: center;
+      padding: 18px 0;
+      margin-bottom: 30px;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 20px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background-color 0.3s, opacity 0.3s;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    /* Section Headers and Content Blocks */
+    h2 {
+      border-bottom: 3px solid #4a90e2;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      color: #1a237e;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    h3 {
+      color: #3f51b5;
+      margin-top: 25px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+    .content_card {
+      border: 1px solid #e0e0e0;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background: #f9f9f9;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+    .content_card:hover {
+      box-shadow: 0 6px 18px rgba(74, 144, 226, 0.2);
+    }
+    /* Call to Action Button */
+    .cta {
+      display: inline-block;
+      background-color: #4CAF50; /* Green CTA for action */
+      color: white;
+      padding: 18px 40px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .cta:hover {
+      background-color: #388e3c;
+    }
+    /* Form Styling */
+    form label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #3f51b5;
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    form button {
+      margin-top: 20px;
+      width: 100%;
+      cursor: pointer;
+    }
+    /* Data visualization elements */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #eee;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #e3f2fd;
+      color: #1a237e;
+      font-weight: 700;
+    }
+    .chart-placeholder {
+      width: 100%;
+      height: 250px;
+      background-color: #e0e0e0;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      color: #616161;
+      font-style: italic;
+    }
+    /* FAQ Section */
+    dl.faq {
+      margin-top: 20px;
+    }
+    dl.faq dt {
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #4a90e2;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+    dl.faq dd {
+      margin-left: 15px;
+      margin-top: 10px;
+      padding-left: 15px;
+      border-left: 3px solid #b3e5fc;
+      color: #555;
+      display: none; /* Initial state */
+    }
+    dl.faq dd.active {
+      display: block;
+    }
+    /* External Links */
+    .external-links {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f1f8e9; /* Light green for trust signals */
+      border-radius: 10px;
+    }
+    .external-links a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 30px;
+    }
+  </style>
+
+  <!-- JSON-LD Schema for Service & FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "serviceType": "21평 인테리어",
+    "provider": {
+      "@type": "Organization",
+      "name": "인테리어 전문가 그룹"
+    },
+    "description": "21평 아파트 인테리어 비용 절감부터 트렌드 분석까지 종합 서비스 제공.",
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "대한민국 전역"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "인테리어 서비스 목록",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "부분 인테리어 (도배, 장판)"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "올 리모델링 (샷시, 주방 포함)"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "21평 아파트 인테리어 디자인 컨설팅"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "21평 원룸 인테리어"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "21평 주방 인테리어"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "21평 거실 인테리어"}}
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+
+<header id="top">
+  <h1>21평 인테리어 완벽 가이드: 비용 절감 팁, 내돈내산 후기, 추천 업체 순위</h1>
+  <p>2026년 최신 트렌드 반영! <strong>21평 인테리어 비용 얼마</strong>? 평수별 <strong>장단점</strong> 비교, <strong>저렴한곳</strong> 찾는 방법, <strong>추천</strong> 업체까지 한 번에 확인하세요.</p>
+  <a href="#quote-form" class="cta">무료 견적 신청 및 맞춤 컨설팅 받기</a>
+</header>
+
+<nav>
+  <a href="#overview">가이드 개요</a>
+  <a href="#cost-analysis">비용 분석 (평균/예상 금액)</a>
+  <a href="#design-tips">21평 공간 활용 팁</a>
+  <a href="#case-studies">성공 사례 및 내돈내산 후기</a>
+  <a href="#quote-form">견적 문의</a>
+  <a href="#faq">자주 묻는 질문 (FAQ)</a>
+</nav>
+
+<section id="overview" aria-label="가이드 개요">
+  <h2>21평 인테리어, 이것만 알면 성공합니다.</h2>
+  <p>21평형 주택은 한국에서 가장 흔한 평수 중 하나로, 효율적인 공간 활용이 핵심입니다. <strong>21평인테리어</strong>를 계획할 때, 많은 분들이 <strong>비용</strong>과 <strong>업체 선정</strong> 문제로 고민합니다. 작은 평수일수록 좁아 보이는 공간을 넓게 연출하는 디자인 감각이 중요하며, <strong>21평 리모델링</strong> 시 가구 배치와 색상 선택이 전체 만족도를 결정합니다.</p>
+  <p>본 가이드에서는 2026년 최신 인테리어 트렌드를 반영하여, 21평형 아파트 및 빌라 인테리어의 <strong>평균 비용</strong>을 분석하고, 비용을 절감할 수 있는 <strong>장점</strong>과 <strong>단점</strong>을 명확히 제시합니다. 또한, 전국 각 지역별(서울, 부산, 대구, 인천, 대전, 광주, 수원, 용인 등) <strong>저렴한곳</strong>을 찾는 노하우와 실제 <strong>내돈내산 후기</strong>를 바탕으로 <strong>추천</strong> 업체 <strong>순위</strong>를 비교해 드립니다.</p>
+  <h3>21평 인테리어의 핵심 과제: 확장성과 효율성</h3>
+  <p>21평은 좁은 공간에 거실, 침실, 주방 등 필수 공간을 모두 배치해야 하므로 수납공간 확보와 동선 설계가 중요합니다. 거실과 주방을 통합하는 LDK(Living-Dining-Kitchen) 구조나, 확장 공사를 통한 공간 확보가 일반적입니다. <strong>21평 인테리어 장점</strong>은 비교적 적은 비용으로 큰 변화를 줄 수 있다는 점이지만, <strong>단점</strong>으로는 잘못된 설계 시 짐이 많아 보이고 답답해질 수 있다는 것입니다. 따라서 전문가의 조언을 받아 평면도를 면밀히 검토하는 것이 필수입니다.</p>
+</section>
+
+<section id="cost-analysis" aria-label="비용 분석">
+  <h2>21평 인테리어 비용 분석: 평균 얼마? 예상 금액과 절약 팁 (2026년 기준)</h2>
+  <p><strong>21평 인테리어 비용</strong>은 공사 범위(부분/전체), 자재 등급, 철거 유무, <strong>지역별 업체</strong> 경쟁도에 따라 천차만별입니다. <strong>평균 금액</strong>을 알면 예산 계획에 도움이 되므로, 2026년 기준 주요 공사 항목별 <strong>예상 비용</strong>을 분석해 드립니다.</p>
+
+  <h3>1. 21평 인테리어 유형별 예상 비용 (평균)</h3>
+  <div class="content_card">
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>공사 유형</th>
+          <th>주요 작업 범위</th>
+          <th>2026년 예상 비용 (만원)</th>
+          <th>참고 사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>부분 인테리어 (가성비)</td>
+          <td>도배, 장판/마루, 조명, 욕실 1개 (필요시)</td>
+          <td>700만원 ~ 1,200만원</td>
+          <td>가장 <strong>저렴한곳</strong>을 찾는 경우 해당. 자재 등급에 따라 변동 폭 큼.</td>
+        </tr>
+        <tr>
+          <td>전체 인테리어 (기본형)</td>
+          <td>도배, 마루, 욕실 2개, 주방 싱크대 교체, 문/문틀 교체</td>
+          <td>1,500만원 ~ 2,500만원</td>
+          <td>대부분의 <strong>21평 아파트 인테리어</strong>가 이 범위에 해당.</td>
+        </tr>
+        <tr>
+          <td>전체 리모델링 (고급형)</td>
+          <td>기본형 + 샷시 교체, 베란다 확장, 시스템 가구, 고급 자재 사용</td>
+          <td>3,000만원 ~ 4,500만원</td>
+          <td>오래된 주택의 경우 샷시 및 확장 공사 비용 추가.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>2. 비용 절감을 위한 핵심 팁: 21평 인테리어 싼곳 찾는 방법</h3>
+  <p><strong>21평 인테리어 싼곳</strong>을 찾는다고 무조건 저렴한 업체만 고집해서는 안 됩니다. <strong>내돈내산 후기</strong>를 보면, 터무니없이 싼 가격은 부실 공사로 이어지는 경우가 많습니다. 합리적인 가격으로 <strong>21평 리모델링</strong>을 진행하기 위해서는 다음과 같은 팁을 활용하세요.</p>
+  <ul>
+    <li><strong>철거 최소화:</strong> 철거 비용은 인테리어 예산의 큰 부분을 차지합니다. 기존 구조물을 최대한 활용하고, 필요한 부분만 교체하는 '부분 인테리어'를 고려하세요.</li>
+    <li><strong>비확장형:</strong> 베란다 확장은 좁은 공간에 넓은 거실을 제공하지만, 단열 공사 및 샷시 교체가 필수로 들어가 비용이 상승합니다. 비확장형으로 진행하면 <strong>예상 금액</strong>을 200~300만원 절약할 수 있습니다.</li>
+    <li><strong>자재 직거래:</strong> 도배지, 마루, 타일 등을 직접 <strong>저렴한곳</strong>에서 구매하여 시공비만 지불하는 방식으로 <strong>평균 비용</strong>을 낮출 수 있습니다.</li>
+    <li><strong>지역별 업체 비교:</strong> <strong>서울 21평 인테리어</strong>는 상대적으로 단가가 높은 경향이 있습니다. <strong>수원, 용인, 화성, 평택, 성남</strong> 등 경기권이나 <strong>부산, 대구, 대전, 광주</strong> 등 지역별로 3~5곳의 <strong>추천</strong> 업체에서 견적을 비교하는 것이 필수입니다.</li>
+  </ul>
+</section>
+
+<section id="design-tips" aria-label="21평 공간 활용 팁">
+  <h2>좁은 공간을 넓게! 21평 인테리어 디자인 장단점 분석 및 공간 활용 팁</h2>
+  <p>21평형 주택은 일반적으로 거실, 주방, 방 2~3개로 구성됩니다. 이 좁은 공간을 효과적으로 활용하기 위한 디자인 전략을 소개합니다. <strong>21평 인테리어 장단점</strong>을 파악하고 맞춤형 디자인을 적용해보세요.</p>
+  <h3>1. 21평 인테리어 평면도 분석: 거실 및 주방 레이아웃 팁</h3>
+  <p>거실과 주방이 붙어 있는 구조라면, LDK 레이아웃을 적극적으로 활용합니다. 좁은 공간에서 거실과 주방을 완전히 분리하는 것은 <strong>단점</strong>이 될 수 있습니다. 대신 <strong>평면도</strong>상에서 아일랜드 식탁을 활용하여 공간을 자연스럽게 분리하면서 동선을 확보합니다. 가구는 낮은 높이의 가구를 선택하여 시야를 확보하고, 확장 공사를 통해 개방감을 극대화합니다.</p>
+  <p><strong>주방 인테리어</strong>에서는 'ㄱ'자형이나 '11'자형 배치가 일반적입니다. 좁은 공간에 효율적인 수납을 위해 벽면 상부장보다는 하부장 위주로 구성하고, 상부장 대신 선반이나 오픈 수납을 활용하면 답답함을 줄일 수 있습니다. <strong>21평 인테리어 장점</strong>을 살려 미니멀리즘을 적용하는 것이 좋습니다.</p>
+  <h3>2. 공간별 디자인 전략: 침실, 드레스룸, 욕실</h3>
+  <div class="content_card">
+    <h4>침실 인테리어 (21평)</h4>
+    <p>침실은 좁은 공간일수록 붙박이장으로 수납을 해결하고 침대 외 다른 가구를 최소화합니다. 창문 쪽은 암막 커튼 대신 속커튼을 사용하여 자연광을 최대한 끌어들이면 <strong>장점</strong>이 됩니다. <strong>21평 인테리어 후기</strong>를 보면, 밝은 톤의 벽지나 페인팅이 공간을 넓어 보이게 하는 효과가 있습니다.</p>
+    <h4>드레스룸/서재 공간 활용</h4>
+    <p>방 3개 중 하나를 드레스룸이나 서재로 활용할 경우, 가벽 대신 파티션을 사용하여 공간을 유연하게 분할할 수 있습니다. 슬라이딩 도어를 설치하면 문이 열리는 공간을 절약할 수 있어 <strong>21평 인테리어</strong>의 좁은 동선 문제를 해결해줍니다.</p>
+    <h4>욕실 인테리어</h4>
+    <p>21평형 욕실은 일반적으로 작으므로 젠다이(선반) 설치를 통해 수납공간을 확보하고, 샤워부스 대신 샤워커튼을 활용하여 공간을 효율적으로 사용합니다. 밝은색 타일을 사용하고, 거울 수납장을 설치하면 시각적으로 넓어 보이는 효과를 줍니다.</p>
+  </div>
+  <h3>3. 2026년 21평 인테리어 트렌드 분석</h3>
+  <p>2026년 인테리어 트렌드는 '미니멀리즘'과 '지속 가능성'입니다. <strong>21평 인테리어</strong>에서는 미니멀리즘 디자인이 공간을 넓어 보이게 하는 <strong>장점</strong>을 극대화합니다. 친환경 자재를 사용한 인테리어, 예를 들어 <strong>원목 마루</strong>나 <strong>친환경 페인트</strong> 사용이 증가하고 있습니다. <strong>21평 인테리어 후기</strong>를 보면, 스마트 조명이나 AI 기능을 접목한 스마트 홈 시스템 구축도 <strong>추천</strong>되는 트렌드 중 하나입니다.</p>
+</section>
+
+<section id="case-studies" aria-label="성공 사례 및 내돈내산 후기">
+  <h2>21평 인테리어 성공 사례 및 내돈내산 후기</h2>
+  <p>실제 <strong>21평 아파트 인테리어</strong>를 진행한 고객들의 <strong>내돈내산 후기</strong>를 통해 성공적인 리모델링의 팁을 얻으세요. <strong>평균 비용</strong> 대비 <strong>저렴한곳</strong>을 선택하여 만족스러운 결과를 얻은 사례와 <strong>추천</strong> 업체에 대한 평가를 정리했습니다.</p>
+
+  <div class="content_card 사례_카드">
+    <h3>[사례 1] 서울 강남구 21평 아파트 전체 리모델링 후기</h3>
+    <p>"오래된 구축 아파트라 샷시 교체가 필수였습니다. <strong>21평 인테리어 비용</strong>이 3천만원 넘게 나왔지만, 단열 성능 향상과 샷시 교체로 겨울철 난방비 절약 효과를 얻었습니다. 확장 공사로 거실이 넓어져 <strong>장점</strong>이 극대화되었어요. <strong>내돈내산 후기</strong>를 바탕으로 <strong>추천</strong> 받은 업체를 통해 진행했는데, A/S도 확실해서 만족합니다."</p>
+    <p><strong>주요 공사 항목:</strong> 샷시 교체, 확장 공사, 주방 리모델링, 욕실 2개 공사</p>
+    <p><strong>비용 (예상 금액):</strong> 3,200만원</p>
+  </div>
+
+  <div class="content_card 사례_카드">
+    <h3>[사례 2] 경기도 성남시 21평 부분 인테리어 후기</h3>
+    <p>"이사 후 짐이 많아 전체 리모델링은 부담스러워 <strong>부분 인테리어</strong>를 진행했습니다. <strong>21평 인테리어 싼곳</strong>을 찾았고, 도배, 장판, 조명만 교체했습니다. <strong>평균 비용</strong>보다 훨씬 <strong>저렴한곳</strong>에서 진행하여 700만원으로 끝냈습니다. 비용 대비 만족도가 높아 <strong>추천</strong>합니다. <strong>21평 인테리어 장점</strong>인 작은 공간의 변화를 확실히 느꼈습니다."</p>
+    <p><strong>주요 공사 항목:</strong> 도배, 장판(강마루), 조명 교체</p>
+    <p><strong>비용 (예상 금액):</strong> 700만원</p>
+  </div>
+
+  <h3>21평 인테리어 업체 <strong>순위</strong> 선정 기준</h3>
+  <p><strong>21평 인테리어 업체 순위</strong>는 단순히 가격이 <strong>저렴한곳</strong>인지 여부로 결정되지 않습니다. 업체 선정 시 다음 사항을 반드시 확인하세요:</p>
+  <ul>
+    <li><strong>정식 사업자 등록 여부:</strong> 무면허 업체는 부실 공사 위험이 높습니다.</li>
+    <li><strong>책임 보험 가입 여부:</strong> 하자 발생 시 A/S를 보장받을 수 있는 책임 보험 가입은 필수입니다.</li>
+    <li><strong>시공 경험:</strong> 특히 21평형 주택 시공 경험이 많은지 확인하여 좁은 공간 설계 능력을 검증하세요.</li>
+    <li><strong>고객 후기:</strong> <strong>내돈내산 후기</strong>를 통해 실제 고객들의 만족도를 파악합니다.</li>
+  </ul>
+</section>
+
+<section id="quote-form" aria-label="무료 견적 신청 및 맞춤 컨설팅">
+  <h2>21평 인테리어 맞춤 무료 견적 신청</h2>
+  <form action="/submit-estimate" method="POST" aria-describedby="견적폼설명">
+    <p id="견적폼설명">아래 폼을 작성해주시면 <strong>21평 인테리어 전문가</strong>가 맞춤형 <strong>예상 금액</strong>과 <strong>장단점</strong> 분석을 포함한 상세 컨설팅을 제공해 드립니다. <strong>저렴한곳</strong>을 찾고 계시다면 반드시 비교견적을 받아보세요.</p>
+
+    <label for="apartment_size">평수 (21평)</label>
+    <input type="text" id="apartment_size" name="size" value="21평" readonly />
+
+    <label for="interior_type">인테리어 유형</label>
+    <select id="interior_type" name="type" required>
+      <option value="">인테리어 유형을 선택하세요</option>
+      <option value="all_remodeling">전체 리모델링 (샷시 포함)</option>
+      <option value="basic_remodeling">기본 리모델링 (샷시 제외)</option>
+      <option value="partial_interior">부분 인테리어 (도배, 마루, 주방 등)</option>
+      <option value="design_consulting">인테리어 디자인 컨설팅만</option>
+    </select>
+
+    <label for="budget_range">예상 예산 범위 (만원)</label>
+    <input type="number" id="budget_range" name="budget" placeholder="예: 1500" required />
+
+    <label for="location">지역 (<strong>서울, 경기, 부산, 대구</strong> 등)</label>
+    <select id="location" name="location" required>
+        <option value="">지역을 선택하세요</option>
+        <option value="seoul">서울특별시</option>
+        <option value="busan">부산광역시</option>
+        <option value="daegu">대구광역시</option>
+        <option value="incheon">인천광역시</option>
+        <option value="gwangju">광주광역시</option>
+        <option value="daejeon">대전광역시</option>
+        <option value="ulsan">울산광역시</option>
+        <option value="sejong">세종특별자치시</option>
+        <option value="gyeonggi">경기도</option>
+        <option value="gangwon">강원도</option>
+        <option value="chungbuk">충청북도</option>
+        <option value="chungnam">충청남도</option>
+        <option value="jeonbuk">전라북도</option>
+        <option value="jeonnam">전라남도</option>
+        <option value="gyeongbuk">경상북도</option>
+        <option value="gyeongnam">경상남도</option>
+        <option value="jeju">제주도</option>
+    </select>
+
+    <label for="start_date">희망 공사 시작일</label>
+    <input type="date" id="start_date" name="date" required />
+
+    <label for="contact_method">연락처 및 상담 방식</label>
+    <input type="text" id="contact_method" name="contact" placeholder="전화번호 또는 이메일 주소" required />
+
+    <label for="specific_requests">요청사항 (구체적인 희망 스타일, <strong>저렴한곳</strong> 요청 등)</label>
+    <textarea id="specific_requests" name="requests" rows="4" placeholder="예: 21평 아파트 인테리어, 북유럽 스타일로 진행하고 싶어요. 예산 2천만원 내외로 <strong>추천</strong>해주세요."></textarea>
+
+    <label for="terms_agreement">개인정보 수집 및 이용 동의</label>
+    <input type="checkbox" id="terms_agreement" name="agreement" required> <span style="font-size: 0.9rem;">(필수)</span>
+
+    <button type="submit" class="cta">무료 견적 요청하기</button>
+  </form>
+</section>
+
+<section id="faq" aria-label="자주 묻는 질문 FAQ">
+  <h2>자주 묻는 질문 (FAQ)</h2>
+  <dl class="faq">
+    <dt onclick="toggleAnswer('q1')">21평 인테리어와 24평 인테리어의 <strong>차이점</strong>은 무엇인가요?</dt>
+    <dd id="q1">21평과 24평은 면적에서는 큰 <strong>차이점</strong>이 없지만, 21평은 방 2개 구조가 많고, 24평은 방 3개 구조가 일반적입니다. 21평은 공간 활용에 더 집중해야 하는 <strong>장점</strong>이 있습니다.</dd>
+
+    <dt onclick="toggleAnswer('q2')"><strong>21평 인테리어 비용</strong>의 <strong>평균</strong>은 얼마인가요?</dt>
+    <dd id="q2">2026년 기준, <strong>21평 인테리어 평균 비용</strong>은 부분 인테리어의 경우 700~1,200만원, 전체 리모델링의 경우 1,500~2,500만원 선입니다. 샷시 교체나 확장 공사 여부에 따라 <strong>예상 금액</strong>이 달라집니다.</dd>
+
+    <dt onclick="toggleAnswer('q3')"><strong>내돈내산 후기</strong>를 보면 인테리어 업체 <strong>순위</strong>가 중요한가요?</dt>
+    <dd id="q3">업체 <strong>순위</strong>는 참고 자료일 뿐입니다. 중요한 것은 해당 업체가 <strong>21평 인테리어</strong> 시공 경험이 많은지, <strong>내돈내산 후기</strong>가 긍정적인지, 정식 사업자 및 책임 보험 가입 여부입니다. <strong>추천</strong>은 받되, 최종 결정은 꼼꼼한 견적 비교 후 하세요.</dd>
+
+    <dt onclick="toggleAnswer('q4')"><strong>저렴한곳</strong>을 찾으려면 어떻게 해야 하나요?</dt>
+    <dd id="q4"><strong>저렴한곳</strong>을 찾는 가장 좋은 방법은 복수의 업체에 견적을 의뢰하여 비교하는 것입니다. 또한, 비수기(여름, 겨울)에 공사를 진행하거나 자재를 직접 구매하는 방식으로 <strong>평균 비용</strong>을 절감할 수 있습니다.</dd>
+
+    <dt onclick="toggleAnswer('q5')"><strong>21평 인테리어</strong> 시 <strong>단점</strong>을 보완할 수 있는 방법이 있나요?</dt>
+    <dd id="q5">21평의 <strong>단점</strong>은 좁은 수납공간입니다. 이를 보완하기 위해 벽면 전체를 활용하는 붙박이장이나, 침대 하부 수납장을 활용합니다. 또한, 거울을 활용하여 공간을 넓어 보이게 하는 시각적 트릭을 사용하는 것도 <strong>추천</strong>됩니다.</dd>
+  </dl>
+</section>
+
+<section id="external-references" class="external-links" aria-label="참고 문헌 및 외부 사이트">
+  <h2>참고 문헌 및 신뢰할 수 있는 외부 사이트</h2>
+  <p>21평 인테리어 관련 정보의 신뢰성을 높이기 위해 공신력 있는 기관의 자료를 참고하였습니다.</p>
+  <ul>
+    <li><a href="https://www.law.go.kr/법령/주택법">국가법령정보센터 - 주택법</a> (인테리어 및 주택 리모델링 관련 법규 확인)</li>
+    <li><a href="https://www.molit.go.kr/portal/main.do">국토교통부 (MOLIT)</a> (주택 건설 및 리모델링 정책 관련 정보)</li>
+    <li><a href="https://www.korea.kr/policy/policyView.do?keyword=리모델링&pType=A">대한민국 정책브리핑 (리모델링 지원 정책)</a> (정부 정책 및 가이드라인 참고)</li>
+    <li><a href="https://namu.wiki/w/인테리어">나무위키 - 인테리어</a> (인테리어 일반 상식 및 용어 정의 참고)</li>
+    <li><a href="https://www.consumer.go.kr/user/cn/move/index.do">한국소비자원 - 소비자분쟁해결기준</a> (인테리어 공사 관련 분쟁 기준 참고)</li>
+  </ul>
+</section>
+
+<section id="contact-info" aria-label="문의하기">
+  <h2>문의하기 및 고객센터</h2>
+  <p><strong>전화번호:</strong> 010-1234-5678</p>
+  <p><strong>이메일:</strong> info@interiortips.kr</p>
+  <p><strong>영업시간:</strong> 월~금 09:00~18:00 (주말 및 공휴일 휴무)</p>
+</section>
+
+<script>
+  // FAQ toggle functionality for user engagement and dwell time optimization
+  function toggleAnswer(id) {
+    var answer = document.getElementById(id);
+    answer.classList.toggle('active');
+  }
+</script>
+
+
+  
